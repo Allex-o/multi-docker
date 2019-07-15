@@ -28,7 +28,6 @@ class Fib extends Component {
         });
     }
 
-   
     handleSubmit = async event => {
         event.preventDefault();
     
