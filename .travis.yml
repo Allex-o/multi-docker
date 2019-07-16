@@ -1,23 +1,23 @@
 sudo: required
 services:
   - docker
-
-  before_install:
-    - docker build -t allex24/react-test -f ./client/Dockerfile.dev ./client
+  
+before_install:
+  - docker build -t allex24/react-test -f ./client/Dockerfile.dev ./client
   # -t = tag, -f overwrite default 
 
-  script:
-    - docker run -e CI=true allex24/react-test npm test
+script:
+  - docker run -e CI=true allex24/react-test npm test
 
-  after_success:
-    - docker build -t allex24/multi-client ./client
-    - docker build -t allex24/multi-nginx ./nginx
-    - docker build -t allex24/multi-server ./server
-    - docker build -t allex24/multi-worker ./worker
+after_success:
+  - docker build -t allex24/multi-client ./client
+  - docker build -t allex24/multi-nginx ./nginx
+  - docker build -t allex24/multi-server ./server
+  - docker build -t allex24/multi-worker ./worker
 
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-    - docker push allex24/multi-client
-    - docker push allex24/multi-nginx
-    - docker push allex24/multi-server
-    - docker push allex24/multi-worker
+  - docker push allex24/multi-client
+  - docker push allex24/multi-nginx
+  - docker push allex24/multi-server
+  - docker push allex24/multi-worker
